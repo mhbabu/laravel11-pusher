@@ -14,6 +14,7 @@ class OrderController extends Controller
 
     public function store(Request $request){
         $order = Order::find(1);
-        OrderShipmentStatusUpdated::dispatch($order);
+        // OrderShipmentStatusUpdated::dispatch($order);
+        event(new OrderShipmentStatusUpdated($order));
     }
 }

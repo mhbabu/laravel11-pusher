@@ -21,7 +21,12 @@ window.Echo = new Echo({
     forceTLS: true
 });
 
-Echo.private(`orders.${orderId}`)
-    .listen('OrderShipmentStatusUpdated', (e) => {
-        console.log(e.order);
-    });
+window.Echo.connector.pusher.connection.bind('connected', () => {
+    console.log("Pusher connected");
+    // Now, Echo is fully initialized, you can use Echo.private() here
+    window.Echo.private('orders')
+        .listen('OrderShipmentStatusUpdated', (e) => {
+            alert(e);
+            // Handle the event data
+        });
+});
